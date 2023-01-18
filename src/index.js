@@ -29,6 +29,30 @@ newRamenForm.addEventListener('submit', e => {
     e.target.reset();
 })
 
+const editRamenForm = document.getElementById('edit-ramen');
+editRamenForm.addEventListener('submit', e => {
+    e.preventDefault();
+    //find Dom element inside ramen-menu with info matching that of the ramen on display.
+    const displayed = document.getElementById('ramen-detail');
+    const displayedName = displayed.querySelector('h2').textContent;
+
+    const menu = document.getElementById('ramen-menu');
+    const children = Array.from(menu.children);
+    const match = children.find(child => child.dataset.name === displayedName);
+
+    //update the matching dom element's data with the data from the edit form.
+    match.dataset.rating = e.target.querySelector('#updated-rating').value;
+    match.dataset.comment = e.target.querySelector('#updated-comment').value;
+
+    //update the displayed comment/rating to match info from the form.
+    const commentDisplay = document.getElementById('comment-display');
+    commentDisplay.textContent = e.target.querySelector('#updated-comment').value;
+
+    const ratingDisplay = document.getElementById('rating-display');
+    ratingDisplay.textContent = e.target.querySelector('#updated-rating').value;
+
+    e.target.reset();
+})
 
 //adds an image to the ramenMenu div with associated data
 function renderRamen(ramenData) {
